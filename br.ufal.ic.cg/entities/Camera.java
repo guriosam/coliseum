@@ -12,7 +12,7 @@ public class Camera implements GLEventListener {
 	private GLU glu;
 	private GLUT glut;
 	private Textures textures;
-	private  final int DEF_D = 5;
+	private final int DEF_D = 5;
 
 	// Define camera variables
 	float cameraAzimuth = 90.0f, cameraSpeed = 0.0f, cameraElevation = 0.0f;
@@ -50,12 +50,12 @@ public class Camera implements GLEventListener {
 		cameraUpx = camUp[0];
 		cameraUpy = camUp[1];
 		cameraUpz = camUp[2];
-		
-		//Não deixar ir abaixo do chão
-		if(cameraCoordsPosy < 1){
+
+		// Não deixar ir abaixo do chão
+		if (cameraCoordsPosy < 1) {
 			cameraCoordsPosy = 1;
 		}
-		
+
 		glu.gluLookAt(cameraCoordsPosx, cameraCoordsPosy, cameraCoordsPosz, cameraCoordsPosx + tmp[0],
 				cameraCoordsPosy + tmp[1], cameraCoordsPosz + tmp[2], cameraUpx, cameraUpy, cameraUpz);
 	}
@@ -65,7 +65,7 @@ public class Camera implements GLEventListener {
 		float x, y, z;
 
 		// Do x-z calculation
-		
+
 		float theta = (float) Math.toRadians(90 - azimuth);
 		float tantheta = (float) Math.tan(theta);
 		float radian_alt = (float) Math.toRadians(altitude);
@@ -104,7 +104,6 @@ public class Camera implements GLEventListener {
 		result[0] = x;
 		result[1] = y;
 		result[2] = z;
-	
 
 		return result;
 	}
@@ -164,7 +163,6 @@ public class Camera implements GLEventListener {
 	@Override
 	public void dispose(GLAutoDrawable drawable) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -182,11 +180,11 @@ public class Camera implements GLEventListener {
 		gl.glViewport(0, 0, width, height);
 		gl.glMatrixMode(GL2.GL_PROJECTION);
 		gl.glLoadIdentity();
-		glu.gluPerspective(70.0, width / (float) height, 0.1, 30.0);
+		glu.gluPerspective(60.0, width / (float) height, 0.1, 90.0);
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 
 	}
-	
+
 	private void createCorredor(GLAutoDrawable drawable) {
 		// chao do corredor
 		float groundWidth = 72;
@@ -194,73 +192,114 @@ public class Camera implements GLEventListener {
 		createCube(drawable, 3, groundWidth, 0.2f, groundHeight, -0.5f, 0, 0, 0, 0, 0);
 
 		// Criar Teto
-		//createCube(drawable, textureRoof2, 3, 0.2f, 18, -0.5f, 2.1f, 0, 0, 0, 0);
+		// createCube(drawable, textureRoof2, 3, 0.2f, 18, -0.5f, 2.1f, 0, 0, 0,
+		// 0);
 
 		// Parede esquerda maior //
-		//createCube(drawable, 0, 0.2f, 2, 14.5f, -2, 1, -2.8f);
-		for(float i = 0; i < 10; i+=1){
-			createCube(drawable, textures.getTextureArc1(), 0.2f, 2, 1.0f, -2, 1, i, 0, 0.5f, 0);
+		// createCube(drawable, 0, 0.2f, 2, 14.5f, -2, 1, -2.8f);
+		for (float i = 0; i < 10; i += 1) {
+			//createCube(drawable, textures.getTextureArc1(), 0.2f, 2, 1.0f, -2, 1, i, 0, 0.5f, 0);
 		}
+
+		// (Drawable, textureColor,
+		//largura, altura, comprimento, 
+		//x, y, z, 
+		//rotate vertical, rotate diagonal, rotate horizontal)
 		
-		//createCube(drawable, 1, 0.2f, 2, 4f, -2, 1, -0.2f, 0, 0, 0);
-		//createCube(drawable, 1, 0.2f, 2, 4f, -2, 1, -3.5f, 0, 0, 0);
-		//createCube(drawable, 1, 0.2f, 2, 4f, -2, 1, -6.8f, 0, 0, 0);
+		createCube(drawable, textures.getTextureArc1(), 
+				0.2f, 2, 3.0f,
+				-2, 5, 20, 
+				0, 0.0f, -25);
+		
+		createCube(drawable, textures.getTextureArc1(), 
+				0.2f, 2, 3.0f,
+				-4, 5, 20, 
+				0, 0.0f, -25);
+		
+		createCube(drawable, textures.getTextureArc1(), 
+				0.2f, 2, 3.0f,
+				-2, 5, -20, 
+				0, 0.0f, 25);
+		
+		createCube(drawable, textures.getTextureArc1(), 
+				0.2f, 2, 3.0f,
+				-4, 5, -20, 
+				0, 0.0f, 25);
+		
+		//createCube(drawable, textures.getTextureArc1(), 
+			//	0.2f, 2, 5.0f,
+			//	-12, 5, 17, 
+			//	0, 25.0f, -25);
+		
+		//out circle
+		createCylinder(drawable, textures.getTextureArc1(),
+				0.2f, 2, 27.0f,
+				-2, 0, 0,
+				0, 0.5f, 0);
+		
+		createCylinder(drawable, textures.getTextureArc1(),
+				0.2f, 2, 27.0f,
+				-2, 3.5f, 0,
+				0, 0.5f, 0);
+		
+		createCylinder(drawable, textures.getTextureArc1(),
+				0.2f, 2, 27.0f,
+				-2, 7.0f, 0,
+				0, 0.5f, 0);
+		
+		//inner circles
+		
+		createCylinder(drawable, 2,
+				0.2f, 2, 22.0f,
+				-2, 0, 0,
+				0, 0.5f, 0);
+		
+		createCylinder(drawable, 2,
+				0.2f, 2, 22.0f,
+				-2, 3f, 0,
+				0, 0.5f, 0);
+		
+
+		
+		// inner inner circle
+		
+		createCylinder(drawable, 3,
+				0.2f, 2, 17.0f,
+				-2, 0, 0,
+				0, 0.5f, 0);
+		
+
+		// createCube(drawable, 1, 0.2f, 2, 4f, -2, 1, -0.2f, 0, 0, 0);
+		// createCube(drawable, 1, 0.2f, 2, 4f, -2, 1, -3.5f, 0, 0, 0);
+		// createCube(drawable, 1, 0.2f, 2, 4f, -2, 1, -6.8f, 0, 0, 0);
 
 		// Parede esquerda menor
-		//createCube(drawable, textureWall, 0.2f, 2, 4.7f, -2, 1, 7.6f, 0, 0, 0);
+		// createCube(drawable, textureWall, 0.2f, 2, 4.7f, -2, 1, 7.6f, 0, 0,
+		// 0);
 
 		// Parede direita
-		//createCube(drawable, textureCorredor, 0.2f, 2, 4f, 1, 1, 3.1f, 0, 0, 0);
-		//createCube(drawable, textureCorredor, 0.2f, 2, 4f, 1, 1, -0.2f, 0, 0, 0);
-		//createCube(drawable, textureCorredor, 0.2f, 2, 4f, 1, 1, -3.5f, 0, 0, 0);
-		//createCube(drawable, textureCorredor, 0.2f, 2, 4f, 1, 1, -6.8f, 0, 0, 0);
-		//createCube(drawable, textureCorredor, 0.2f, 2, 4f, 1, 1, 6.4f, 0, 0, 0);
+		// createCube(drawable, textureCorredor, 0.2f, 2, 4f, 1, 1, 3.1f, 0, 0,
+		// 0);
+		// createCube(drawable, textureCorredor, 0.2f, 2, 4f, 1, 1, -0.2f, 0, 0,
+		// 0);
+		// createCube(drawable, textureCorredor, 0.2f, 2, 4f, 1, 1, -3.5f, 0, 0,
+		// 0);
+		// createCube(drawable, textureCorredor, 0.2f, 2, 4f, 1, 1, -6.8f, 0, 0,
+		// 0);
+		// createCube(drawable, textureCorredor, 0.2f, 2, 4f, 1, 1, 6.4f, 0, 0,
+		// 0);
 
 		// Parede direita menor
-		//createCube(drawable, textureWall, 0.2f, 2, 3f, 1, 1, 8.5f, 0, 0, 0);
+		// createCube(drawable, textureWall, 0.2f, 2, 3f, 1, 1, 8.5f, 0, 0, 0);
 
 		// fundo
-		//createCube(drawable, textureFundo, 3f, 2, 0.2f, -0.5f, 1, 9f, 0, 0, 0);
+		// createCube(drawable, textureFundo, 3f, 2, 0.2f, -0.5f, 1, 9f, 0, 0,
+		// 0);
 
 		// Frente
-		//createCube(drawable, textureWall, 3f, 2, 0.2f, -0.5f, 1, -8.8f, 0, 0, 0);
+		// createCube(drawable, textureWall, 3f, 2, 0.2f, -0.5f, 1, -8.8f, 0, 0,
+		// 0);
 
-	}
-	
-	private void createCircle(GLAutoDrawable drawable, int texture, float width, float height, float lenght, float x,
-			float y, float z){
-		GL2 gl = drawable.getGL().getGL2();
-		
-		gl.glPushMatrix();
-		
-		float radius = 0.4f;
-		
-		gl.glTranslatef(-z, y, -x);
-		gl.glRotated(0, 1, 0, 0);
-		gl.glRotated(0, 0, 1, 0);
-		gl.glRotated(0, 0, 0, 1);
-		
-		gl.glTranslatef(z, -y, x);
-		
-		gl.glScalef(lenght, height, width);
-		
-		gl.glEnable(GL2.GL_TEXTURE_2D);
-		gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
-		gl.glColor3f(1f, 1f, 1f);
-		
-		gl.glBegin(GL2.GL_TRIANGLE_FAN);
-		
-		for(float angle = 1.0f; angle < 361.0f; angle += 0.2){
-			float x2 = (float) (lenght + Math.sin(angle)*radius);
-			float y2 = (float) (lenght + Math.cos(angle)*radius);
-			
-			gl.glVertex3f(x2, 1, y2);
-		}
-	
-		
-		gl.glEnd();
-		gl.glPopMatrix();
-		gl.glFlush();
 	}
 
 	private void createCube(GLAutoDrawable drawable, int texture, float width, float height, float lenght, float x,
@@ -274,10 +313,10 @@ public class Camera implements GLEventListener {
 		gl.glRotated(rotateX, 1, 0, 0);
 		gl.glRotated(rotateY, 0, 1, 0);
 		gl.glRotated(rotateZ, 0, 0, 1);
-//
-//		gl.glScalef(lenght, height, width);
-//		glut.glutSolidCube(1f);
-//		gl.glScalef(0, 0, 0);
+		//
+		// gl.glScalef(lenght, height, width);
+		// glut.glutSolidCube(1f);
+		// gl.glScalef(0, 0, 0);
 
 		gl.glTranslatef(z, -y, x);
 
@@ -286,11 +325,15 @@ public class Camera implements GLEventListener {
 		gl.glEnable(GL2.GL_TEXTURE_2D);
 		gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
 		gl.glColor3f(1f, 1f, 1f);
-//		gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MIN_FILTER, GL2.GL_LINEAR_MIPMAP_NEAREST);
-//		gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MAG_FILTER, GL2.GL_LINEAR_MIPMAP_LINEAR);
-//		gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_WRAP_S, GL2.GL_REPEAT);
-//		gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_WRAP_T, GL2.GL_REPEAT);
-//		
+		// gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MIN_FILTER,
+		// GL2.GL_LINEAR_MIPMAP_NEAREST);
+		// gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MAG_FILTER,
+		// GL2.GL_LINEAR_MIPMAP_LINEAR);
+		// gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_WRAP_S,
+		// GL2.GL_REPEAT);
+		// gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_WRAP_T,
+		// GL2.GL_REPEAT);
+		//
 		gl.glBegin(GL2.GL_QUADS);
 
 		x = -x;
@@ -384,26 +427,26 @@ public class Camera implements GLEventListener {
 		gl.glPopMatrix();
 		gl.glFlush();
 	}
-	
+
 	private void createCylinder(GLAutoDrawable drawable, int texture, float width, float height, float lenght, float x,
 			float y, float z, float rotateX, float rotateY, float rotateZ) {
 
 		GL2 gl = drawable.getGL().getGL2();
 
 		gl.glPushMatrix();
+		gl.glEnable(GL2.GL_TEXTURE_2D);
 		gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
 
 		gl.glTranslatef(-z, y, -x);
-		gl.glRotated(rotateX, 1, 0, 0);
-		gl.glRotated(rotateY, 0, 1, 0);
-		gl.glRotated(rotateZ, 0, 0, 1);
-		gl.glScalef(lenght, height, width);
+		gl.glScalef(lenght, height, lenght);
 		gl.glBegin(GL2.GL_QUADS);
 		for (double j = 0; j <= 360; j += 0.1) {
-			gl.glTexCoord2f(1f, 0f);
-			gl.glVertex3f((float) (Math.cos(j)), +1, (float) (Math.sin(j)));
-			gl.glTexCoord2f(0.0f, 1.0f);
-			gl.glVertex3f((float) (Math.cos(j)), -1, (float) (Math.sin(j)));
+			gl.glTexCoord3f(1f, 0f, 0f);
+			gl.glVertex3f((float) (Math.cos(j)), 2, (float) (Math.sin(j)));
+			gl.glTexCoord3f(0.0f, 1.0f, 0f);
+			gl.glVertex3f((float) (Math.cos(j)), 0, (float) (Math.sin(j)));
+			//gl.glTexCoord3f(0.0f, 0.0f, 1.0f);
+			//gl.glVertex3f((float) (Math.cos(j)), 0, (float) (Math.sin(j)));
 		}
 		gl.glEnd();
 
@@ -411,5 +454,4 @@ public class Camera implements GLEventListener {
 		gl.glFlush();
 
 	}
-
 }

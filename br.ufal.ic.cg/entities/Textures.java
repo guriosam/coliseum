@@ -55,6 +55,9 @@ public class Textures {
 			
 			Texture textArc1 = TextureIO.newTexture(new File(getClass().getResource("/img/arc_texture.png").getPath()), true);
 			textureArc1 = textArc1.getTextureObject(gl);
+			
+			Texture textArc2 = TextureIO.newTexture(new File(getClass().getResource("/img/arc2_texture.png").getPath()), true);
+			textureArc2 = textArc1.getTextureObject(gl);
 
 			Texture text = TextureIO.newTexture(new File(getClass().getResource("/img/piso2.jpg").getPath()), true);
 			texture = text.getTextureObject(gl);
@@ -167,6 +170,12 @@ public class Textures {
 	public int getTextureArc1() {
 		return textureArc1;
 	}
+	
+	public int getTextureArc2() {
+		return textureArc2;
+	}
+	
+	
 
 
 	

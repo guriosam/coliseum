@@ -73,34 +73,6 @@ public class Activity {
 
 	}
 
-	// -----------------------------TELA------------------------------------
-
-	private static final float PI = 3.1415f;
-
-		private void createCube2(GLAutoDrawable drawable, int texture, float width, float height, float lenght, float x,
-			float y, float z, float rotateX, float rotateY, float rotateZ) {
-
-		GL2 gl = drawable.getGL().getGL2();
-
-		gl.glPushMatrix();
-
-		gl.glTranslatef(-z, y, -x);
-		gl.glRotated(rotateX, 1, 0, 0);
-		gl.glRotated(rotateY, 0, 1, 0);
-		gl.glRotated(rotateZ, 0, 0, 1);
-
-		gl.glScalef(lenght, height, width);
-		gl.glColor3f(0.6f, 0.6f, 0.6f);
-		glut.glutSolidCube(1f);
-		gl.glScalef(0, 0, 0);
-
-		gl.glTranslatef(z, -y, x);
-
-		gl.glPopMatrix();
-		gl.glFlush();
-	}
-
-	// -----------------------------TECLADO------------------------------------
 
 	/*
 	 * private void createLab(GLAutoDrawable drawable) { // chao do laboratorio
