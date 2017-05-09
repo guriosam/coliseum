@@ -4,6 +4,7 @@ import com.jogamp.opengl.GL2;
 import com.jogamp.opengl.GLAutoDrawable;
 import com.jogamp.opengl.GLEventListener;
 import com.jogamp.opengl.glu.GLU;
+import com.jogamp.opengl.glu.GLUquadric;
 import com.jogamp.opengl.util.gl2.GLUT;
 
 public class Camera implements GLEventListener {
@@ -18,7 +19,7 @@ public class Camera implements GLEventListener {
 	float cameraAzimuth = 90.0f, cameraSpeed = 0.0f, cameraElevation = 0.0f;
 
 	// Set camera at (0, 0, -20)
-	float cameraCoordsPosx = 5.0f, cameraCoordsPosy = 1f, cameraCoordsPosz = 0.0f;
+	float cameraCoordsPosx = 5.0f, cameraCoordsPosy = 10f, cameraCoordsPosz = 0.0f;
 
 	// Set camera orientation
 	float cameraUpx = 0.0f, cameraUpy = 1.0f, cameraUpz = 0.0f;
@@ -150,7 +151,7 @@ public class Camera implements GLEventListener {
 		// glut.glutSolidSphere(0.03f, 20, 20);
 		// gl.glPopMatrix();
 
-		createCorredor(drawable);
+		createColiseum(drawable);
 		// createLab(drawable);
 
 		// Iluminação
@@ -185,7 +186,7 @@ public class Camera implements GLEventListener {
 
 	}
 
-	private void createCorredor(GLAutoDrawable drawable) {
+	private void createColiseum(GLAutoDrawable drawable) {
 		// chao do corredor
 		float groundWidth = 72;
 		float groundHeight = 72;
@@ -201,104 +202,8 @@ public class Camera implements GLEventListener {
 			//createCube(drawable, textures.getTextureArc1(), 0.2f, 2, 1.0f, -2, 1, i, 0, 0.5f, 0);
 		}
 
-		// (Drawable, textureColor,
-		//largura, altura, comprimento, 
-		//x, y, z, 
-		//rotate vertical, rotate diagonal, rotate horizontal)
-		
-		createCube(drawable, textures.getTextureArc1(), 
-				0.2f, 2, 3.0f,
-				-2, 5, 20, 
-				0, 0.0f, -25);
-		
-		createCube(drawable, textures.getTextureArc1(), 
-				0.2f, 2, 3.0f,
-				-4, 5, 20, 
-				0, 0.0f, -25);
-		
-		createCube(drawable, textures.getTextureArc1(), 
-				0.2f, 2, 3.0f,
-				-2, 5, -20, 
-				0, 0.0f, 25);
-		
-		createCube(drawable, textures.getTextureArc1(), 
-				0.2f, 2, 3.0f,
-				-4, 5, -20, 
-				0, 0.0f, 25);
-		
-		//createCube(drawable, textures.getTextureArc1(), 
-			//	0.2f, 2, 5.0f,
-			//	-12, 5, 17, 
-			//	0, 25.0f, -25);
-		
-		//out circle
-		createCylinder(drawable, textures.getTextureArc1(),
-				0.2f, 2, 27.0f,
-				-2, 0, 0,
-				0, 0.5f, 0);
-		
-		createCylinder(drawable, textures.getTextureArc1(),
-				0.2f, 2, 27.0f,
-				-2, 3.5f, 0,
-				0, 0.5f, 0);
-		
-		createCylinder(drawable, textures.getTextureArc1(),
-				0.2f, 2, 27.0f,
-				-2, 7.0f, 0,
-				0, 0.5f, 0);
-		
-		//inner circles
-		
-		createCylinder(drawable, 2,
-				0.2f, 2, 22.0f,
-				-2, 0, 0,
-				0, 0.5f, 0);
-		
-		createCylinder(drawable, 2,
-				0.2f, 2, 22.0f,
-				-2, 3f, 0,
-				0, 0.5f, 0);
-		
+		createWall(drawable);
 
-		
-		// inner inner circle
-		
-		createCylinder(drawable, 3,
-				0.2f, 2, 17.0f,
-				-2, 0, 0,
-				0, 0.5f, 0);
-		
-
-		// createCube(drawable, 1, 0.2f, 2, 4f, -2, 1, -0.2f, 0, 0, 0);
-		// createCube(drawable, 1, 0.2f, 2, 4f, -2, 1, -3.5f, 0, 0, 0);
-		// createCube(drawable, 1, 0.2f, 2, 4f, -2, 1, -6.8f, 0, 0, 0);
-
-		// Parede esquerda menor
-		// createCube(drawable, textureWall, 0.2f, 2, 4.7f, -2, 1, 7.6f, 0, 0,
-		// 0);
-
-		// Parede direita
-		// createCube(drawable, textureCorredor, 0.2f, 2, 4f, 1, 1, 3.1f, 0, 0,
-		// 0);
-		// createCube(drawable, textureCorredor, 0.2f, 2, 4f, 1, 1, -0.2f, 0, 0,
-		// 0);
-		// createCube(drawable, textureCorredor, 0.2f, 2, 4f, 1, 1, -3.5f, 0, 0,
-		// 0);
-		// createCube(drawable, textureCorredor, 0.2f, 2, 4f, 1, 1, -6.8f, 0, 0,
-		// 0);
-		// createCube(drawable, textureCorredor, 0.2f, 2, 4f, 1, 1, 6.4f, 0, 0,
-		// 0);
-
-		// Parede direita menor
-		// createCube(drawable, textureWall, 0.2f, 2, 3f, 1, 1, 8.5f, 0, 0, 0);
-
-		// fundo
-		// createCube(drawable, textureFundo, 3f, 2, 0.2f, -0.5f, 1, 9f, 0, 0,
-		// 0);
-
-		// Frente
-		// createCube(drawable, textureWall, 3f, 2, 0.2f, -0.5f, 1, -8.8f, 0, 0,
-		// 0);
 
 	}
 
@@ -436,7 +341,7 @@ public class Camera implements GLEventListener {
 		gl.glPushMatrix();
 		gl.glEnable(GL2.GL_TEXTURE_2D);
 		gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
-
+		
 		gl.glTranslatef(-z, y, -x);
 		gl.glScalef(lenght, height, lenght);
 		gl.glBegin(GL2.GL_QUADS);
@@ -453,5 +358,179 @@ public class Camera implements GLEventListener {
 		gl.glPopMatrix();
 		gl.glFlush();
 
+	}
+	
+	private void drawCube(GLAutoDrawable drawable, float x, float y, float z, float width, float height, float lenght){
+		
+		GL2 gl = drawable.getGL().getGL2();
+		
+		//gl.glPushMatrix();
+
+		gl.glColor3f(0.6f, 0.6f, 0.6f);
+		
+		gl.glBegin(GL2.GL_QUADS);
+
+		x = -x;
+		z = -z;
+
+		// Left Face (comprimentoio,altura,largura)
+		//gl.glTexCoord2f(0.0f, 0.0f);
+		gl.glVertex3f(-lenght / 2 + z, -height / 2 + y, width / 2 + x);// frente
+																		// baixo
+		//gl.glTexCoord2f(1.0f, 0.0f);
+		gl.glVertex3f(lenght / 2 + z, -height / 2 + y, width / 2 + x);// atras
+																		// baixo
+		//gl.glTexCoord2f(1.0f, 1.0f);
+		gl.glVertex3f(lenght / 2 + z, height / 2 + y, width / 2 + x);// atras
+																		// cima
+		//gl.glTexCoord2f(0.0f, 1.0f);
+		gl.glVertex3f(-lenght / 2 + z, height / 2 + y, width / 2 + x);// frente
+																		// cima
+
+		// Right face
+		//gl.glTexCoord2f(1.0f, 0.0f);
+		gl.glVertex3f(-lenght / 2 + z, -height / 2 + y, -width / 2 + x);// frente
+																		// baixo
+		//gl.glTexCoord2f(1.0f, 1.0f);
+		gl.glVertex3f(-lenght / 2 + z, height / 2 + y, -width / 2 + x);// frente
+																		// cima
+		//gl.glTexCoord2f(0.0f, 1.0f);
+		gl.glVertex3f(lenght / 2 + z, height / 2 + y, -width / 2 + x);// atras
+																		// Cima
+		//gl.glTexCoord2f(0.0f, 0.0f);
+		gl.glVertex3f(lenght / 2 + z, -height / 2 + y, -width / 2 + x);// atras
+																		// baixo
+
+		// Top Face
+		//gl.glTexCoord2f(0.0f, 1.0f);
+		gl.glVertex3f(-lenght / 2 + z, height / 2 + y, -width / 2 + x);// direita
+																		// cima
+		//gl.glTexCoord2f(0.0f, 0.0f);
+		gl.glVertex3f(-lenght / 2 + z, height / 2 + y, width / 2 + x);// esquerda
+																		// cima
+		//gl.glTexCoord2f(1.0f, 0.0f);
+		gl.glVertex3f(lenght / 2 + z, height / 2 + y, width / 2 + x);// esquerda
+																		// baixo
+		//gl.glTexCoord2f(1.0f, 1.0f);
+		gl.glVertex3f(lenght / 2 + z, height / 2 + y, -width / 2 + x);// direita
+																		// baixo
+
+		// Bottom Face
+		//gl.glTexCoord2f(1.0f, 1.0f);
+		gl.glVertex3f(-lenght / 2 + z, -height / 2 + y, -width / 2 + x);// direita
+																		// cima
+		//gl.glTexCoord2f(0.0f, 1.0f);
+		gl.glVertex3f(lenght / 2 + z, -height / 2 + y, -width / 2 + x);// direita
+																		// baixo
+		//gl.glTexCoord2f(0.0f, 0.0f);
+		gl.glVertex3f(lenght / 2 + z, -height / 2 + y, width / 2 + x);// esquerda
+																		// baixo
+		//gl.glTexCoord2f(1.0f, 0.0f);
+		gl.glVertex3f(-lenght / 2 + z, -height / 2 + y, width / 2 + x);// esquerda
+																		// cima
+
+		// Front face
+		//gl.glTexCoord2f(1.0f, 0.0f);
+		gl.glVertex3f(lenght / 2 + z, -height / 2 + y, -width / 2 + x);// direita
+																		// baixo
+		//gl.glTexCoord2f(1.0f, 1.0f);
+		gl.glVertex3f(lenght / 2 + z, height / 2 + y, -width / 2 + x);// direita
+																		// cima
+		//gl.glTexCoord2f(0.0f, 1.0f);
+		gl.glVertex3f(lenght / 2 + z, height / 2 + y, width / 2 + x);// esquerda
+																		// Cima
+		//gl.glTexCoord2f(0.0f, 0.0f);
+		gl.glVertex3f(lenght / 2 + z, -height / 2 + y, width / 2 + x);// esquerda
+																		// baixo
+
+		// back Face
+		//gl.glTexCoord2f(0.0f, 0.0f);
+		gl.glVertex3f(-lenght / 2 + z, -height / 2 + y, -width / 2 + x);// direita
+																		// baixo
+		//gl.glTexCoord2f(1.0f, 0.0f);
+		gl.glVertex3f(-lenght / 2 + z, -height / 2 + y, width / 2 + x);// esquerda
+																		// baixo
+		//gl.glTexCoord2f(1.0f, 1.0f);
+		gl.glVertex3f(-lenght / 2 + z, height / 2 + y, width / 2 + x);// esquerda
+																		// Cima
+		//gl.glTexCoord2f(0.0f, 1.0f);
+		gl.glVertex3f(-lenght / 2 + z, height / 2 + y, -width / 2 + x);// direita
+		// cima
+		gl.glEnd();
+	}
+
+	private void createWall(GLAutoDrawable drawable){
+		
+		GL2 gl = drawable.getGL().getGL2();
+		
+		gl.glPushMatrix();
+		
+		
+		//Parte superior da primeira camada externa
+		gl.glPushMatrix();
+		gl.glColor3f(0.6f, 0.6f, 0.6f);
+		GLUquadric disk = glu.gluNewQuadric();
+		gl.glTranslatef(1, 6, 1);
+		gl.glRotatef(90, -1, 0, 0);
+		glu.gluDisk(disk, 11.5, 12.5, 25, 5);
+		gl.glPopMatrix();
+		
+		// Primeira camada
+		gl.glPushMatrix();
+		gl.glColor3f(0.6f, 0.6f, 0.6f);
+		gl.glTranslatef(1, 6, 1);
+		gl.glRotatef(90, -1, 0, 0);
+		GLUquadric disc = glu.gluNewQuadric();
+		glu.gluCylinder(disc, 12.5, 12.5, 6, 30, 1);
+		glu.gluCylinder(disc, 11.5, 11.5, 6, 30, 1);
+		gl.glPopMatrix();
+		
+		//Segunda camada
+		gl.glPushMatrix();
+		gl.glColor3f(0.0f, 0.6f, 0.0f);
+		gl.glTranslatef(1, 6, 1);
+		gl.glRotatef(90, -1, 0, 0);
+		GLUquadric arquibancada1 = glu.gluNewQuadric();
+		glu.gluCylinder(arquibancada1, 11.4, 11.4, 4.5, 30, 1);
+		glu.gluCylinder(arquibancada1, 10.5, 11.5, 4.5, 30, 1);
+		glu.gluCylinder(arquibancada1, 10.5, 10.5, 4.5, 30, 1);
+		gl.glPopMatrix();
+		
+		//Terceira camada
+		gl.glPushMatrix();
+		gl.glColor3f(1.0f, 0.0f, 0.0f);
+		gl.glTranslatef(1, 6, 1);
+		gl.glRotatef(90, -1, 0, 0);
+		GLUquadric arquibancada2 = glu.gluNewQuadric();
+		glu.gluCylinder(arquibancada2, 10.4, 10.4, 3.7, 30, 1);
+		glu.gluCylinder(arquibancada2, 8.5, 10.4, 3.7, 30, 1);
+		glu.gluCylinder(arquibancada2, 8.5, 8.5, 3.7, 30, 1);
+		gl.glPopMatrix();
+		
+		//Quinta camada
+		gl.glPushMatrix();
+		gl.glColor3f(0.0f, 1.0f, 1.0f);
+		gl.glTranslatef(1, 6, 1);
+		gl.glRotatef(90, -1, 0, 0);
+		GLUquadric arquibancada4 = glu.gluNewQuadric();
+		glu.gluCylinder(arquibancada4, 8.4, 8.4, 3.2, 30, 1);
+		glu.gluCylinder(arquibancada4, 6.5, 8.4, 3.2, 30, 1);
+		glu.gluCylinder(arquibancada4, 6.5, 6.5, 3.2, 30, 1);
+		gl.glPopMatrix();
+		
+		//Quinta camada
+		gl.glPushMatrix();
+		gl.glColor3f(0.5f, 1.0f, 0.5f);
+		gl.glTranslatef(1, 6, 1);
+		gl.glRotatef(90, -1, 0, 0);
+		GLUquadric arquibancada5 = glu.gluNewQuadric();
+		glu.gluCylinder(arquibancada5, 6.4, 6.4, 2.5, 30, 1);
+		glu.gluCylinder(arquibancada5, 5.4, 6.4, 2.5, 30, 1);
+		glu.gluCylinder(arquibancada5, 5.4, 5.4, 2.5, 30, 1);
+		gl.glPopMatrix();
+
+		gl.glPopMatrix();
+		
+		gl.glFlush();
 	}
 }
