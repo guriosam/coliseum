@@ -42,14 +42,14 @@ public class Activity {
 
 		caps = new GLCapabilities(GLProfile.get(GLProfile.GL2));
 		canvas = new GLCanvas(caps);
-		canvas.setSize(1024, 800);
+		canvas.setSize(1276, 1024);
 		canvas.addGLEventListener(camera);
 		canvas.addKeyListener(keyboard);
 
 		// caps.setDoubleBuffered(true);// request double buffer display mode
 
 		// canvas.addMouseListener(this);
-		animator = new FPSAnimator(canvas, 60);
+		animator = new FPSAnimator(canvas, 30);
 
 		// creating frame
 		final JFrame frame = new JFrame("Coliseum");
@@ -60,7 +60,7 @@ public class Activity {
 		frame.setSize(frame.getContentPane().getPreferredSize());
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
-
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// getContentPane().add(canvas);
 	}
 
@@ -69,11 +69,7 @@ public class Activity {
 	}
 
 	public static void main(String[] args) {
-		new Activity().run();
-
+		Activity act = new Activity();
+		act.run();
 	}
-
-
-	 
-	
 }

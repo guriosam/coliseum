@@ -13,7 +13,8 @@ public class Camera implements GLEventListener {
 	private GLU glu;
 	private GLUT glut;
 	private Textures textures;
-	private final int DEF_D = 5;
+
+	float doorAngle = 100;
 
 	// Define camera variables
 	float cameraAzimuth = 90.0f, cameraSpeed = 0.0f, cameraElevation = 0.0f;
@@ -37,6 +38,7 @@ public class Camera implements GLEventListener {
 		cameraCoordsPosx += tmp[0];
 		cameraCoordsPosy += tmp[1];
 		cameraCoordsPosz += tmp[2];
+
 	}
 
 	public void aimCamera(GL2 gl, GLU glu) {
@@ -115,7 +117,6 @@ public class Camera implements GLEventListener {
 
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity();
-		// gl.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 
 		aimCamera(gl, glu);
 		moveCamera();
@@ -147,15 +148,15 @@ public class Camera implements GLEventListener {
 		//
 		// gl.glPushMatrix();
 		// gl.glTranslated(-3.5f, 2f, 3.2f);
-		// gl.glColor3f(1f, 1f, 1f);
+		// gl.glColor3f(1f, 1f, 1 f);
 		// glut.glutSolidSphere(0.03f, 20, 20);
 		// gl.glPopMatrix();
 
 		createColiseum(drawable);
-		// createLab(drawable);
 
 		// Iluminação
-		// init_lighting(gl);
+		// Light light = new Light();
+		// light.init_lighting(gl);
 
 		gl.glFlush();
 
@@ -181,29 +182,87 @@ public class Camera implements GLEventListener {
 		gl.glViewport(0, 0, width, height);
 		gl.glMatrixMode(GL2.GL_PROJECTION);
 		gl.glLoadIdentity();
-		glu.gluPerspective(60.0, width / (float) height, 0.1, 90.0);
+		glu.gluPerspective(60.0, width / (float) height, 0.1, 180.0);
 		gl.glMatrixMode(GL2.GL_MODELVIEW);
 
 	}
 
 	private void createColiseum(GLAutoDrawable drawable) {
-		// chao do corredor
-		float groundWidth = 72;
-		float groundHeight = 72;
+		// Floor
+		float groundWidth = 150;
+		float groundHeight = 150;
 		createCube(drawable, 3, groundWidth, 0.2f, groundHeight, -0.5f, 0, 0, 0, 0, 0);
 
-		// Criar Teto
-		// createCube(drawable, textureRoof2, 3, 0.2f, 18, -0.5f, 2.1f, 0, 0, 0,
-		// 0);
+		createRing(drawable, 53, 64, 25, 2, 5);
+		createRing(drawable, 42, 64, 20, 4, 4);
+		createRing(drawable, 31, 64, 15, 15, 3);
+		createRing(drawable, 20, 64, 10, 5, 2);
+		createRing(drawable, 0, 64, 5, 3, 1);
 
-		// Parede esquerda maior //
-		// createCube(drawable, 0, 0.2f, 2, 14.5f, -2, 1, -2.8f);
-		for (float i = 0; i < 10; i += 1) {
-			//createCube(drawable, textures.getTextureArc1(), 0.2f, 2, 1.0f, -2, 1, i, 0, 0.5f, 0);
-		}
+		// Ramp
+		// createCube(drawable, 10, 8, 0.2f, 3, -32f, 3, 13, -45, 45, 25);
 
-		createWall(drawable);
+		// Door
+		// createCube(drawable, 10, 0.2f, 5, 8, -28f, 3, 21, 0, doorAngle, 0);
 
+		/// Gladiador 1
+		int alturaGladiador1 = 8;
+		int deslocGladiador1 = -8;
+		// Corpo
+		createCube(drawable, 4, 1, 1.8f, 1, deslocGladiador1 - 0.5f, alturaGladiador1 - 0.5f, 0, 0, 0, 0);
+		// Cabeça
+		createCube(drawable, 5, 1f, 1, 1.5f, deslocGladiador1 - 0.5f, alturaGladiador1 + 1, 0, 0, 0, 0);
+		// Braços
+		createCube(drawable, 5, 2, 0.5f, 1, deslocGladiador1 + 0f, alturaGladiador1, 1, 0, 0, 0);
+		createCube(drawable, 5, 2, 0.5f, 1, deslocGladiador1 + 0f, alturaGladiador1, -1, 0, 0, 0);
+		// Pernas
+		createCube(drawable, 5, 1f, 2, 0.4f, deslocGladiador1 - 0.5f, alturaGladiador1 - 2, 0.3f, 0, 0, 0);
+		createCube(drawable, 5, 1f, 2, 0.4f, deslocGladiador1 + -0.5f, alturaGladiador1 - 2, -0.3f, 0, 0, 0);
+
+		/// Gladiador 2
+		int alturaGladiador2 = 8;
+		int deslocGladiador2 = 8;
+		// Corpo
+		createCube(drawable, 4, 1, 1.8f, 1, deslocGladiador2 + 0.5f, alturaGladiador2 - 0.5f, 0, 0, 0, 0);
+		// Cabeça
+		createCube(drawable, 5, 1f, 1, 1.5f, deslocGladiador2 + 0.5f, alturaGladiador2 + 1, 0, 0, 0, 0);
+		// Braços
+		createCube(drawable, 5, 2, 0.5f, 1, deslocGladiador2 + 0f, alturaGladiador2, 1, 0, 0, 0);
+		createCube(drawable, 5, 2, 0.5f, 1, deslocGladiador2 + 0f, alturaGladiador2, -1, 0, 0, 0);
+		// Pernas
+		createCube(drawable, 5, 1f, 2, 0.4f, deslocGladiador2 + 0.5f, alturaGladiador2 - 2, 0.3f, 0, 0, 0);
+		createCube(drawable, 5, 1f, 2, 0.4f, deslocGladiador2 + 0.5f, alturaGladiador2 - 2, -0.3f, 0, 0, 0);
+
+		/// Leao
+		int alturaLeao = 6;
+		int deslocLeao = 0;
+		// Corpo
+		createCube(drawable, 4, 1, 1, 3, deslocLeao + 0.5f, alturaLeao, 0, 0, 0, 0);
+		// Cabeça
+		createCube(drawable, 5, 1.5f, 1.5f, 2f, deslocLeao + 0.5f, alturaLeao + 1, 1.5f, 0, 0, 25);
+		// Crista
+		createCube(drawable, 4, 1.8f, 1.8f, 0.5f, deslocLeao + 0.5f, alturaLeao + 1.2f, 1f, 0, 0, 25);
+		// Pernas
+		createCube(drawable, 5, 0.3f, 1, 0.3f, deslocLeao + 0.8f, alturaLeao - 1, 0.5f, -1, 0, 0);
+		createCube(drawable, 5, 0.3f, 1, 0.3f, deslocLeao + 0.8f, alturaLeao - 1, -1.2f, -1, 0, 0);
+		createCube(drawable, 5, 0.3f, 1, 0.3f, deslocLeao + 0.2f, alturaLeao - 1, 0.5f, -1, 0, 0);
+		createCube(drawable, 5, 0.3f, 1, 0.3f, deslocLeao + 0.2f, alturaLeao - 1, -1.2f, -1, 0, 0);
+		// Rabo
+		createCube(drawable, 5, 0.2f, 0.2f, 1, deslocLeao + 0.5f, alturaLeao, -2f, 0, 0, 0);
+		
+		///Lança
+		
+		
+		///Espada
+		
+		
+		///Escudo
+		
+		
+		//Pedra ?
+		
+		
+		
 
 	}
 
@@ -341,7 +400,7 @@ public class Camera implements GLEventListener {
 		gl.glPushMatrix();
 		gl.glEnable(GL2.GL_TEXTURE_2D);
 		gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
-		
+
 		gl.glTranslatef(-z, y, -x);
 		gl.glScalef(lenght, height, lenght);
 		gl.glBegin(GL2.GL_QUADS);
@@ -350,8 +409,8 @@ public class Camera implements GLEventListener {
 			gl.glVertex3f((float) (Math.cos(j)), 2, (float) (Math.sin(j)));
 			gl.glTexCoord3f(0.0f, 1.0f, 0f);
 			gl.glVertex3f((float) (Math.cos(j)), 0, (float) (Math.sin(j)));
-			//gl.glTexCoord3f(0.0f, 0.0f, 1.0f);
-			//gl.glVertex3f((float) (Math.cos(j)), 0, (float) (Math.sin(j)));
+			// gl.glTexCoord3f(0.0f, 0.0f, 1.0f);
+			// gl.glVertex3f((float) (Math.cos(j)), 0, (float) (Math.sin(j)));
 		}
 		gl.glEnd();
 
@@ -359,178 +418,182 @@ public class Camera implements GLEventListener {
 		gl.glFlush();
 
 	}
-	
-	private void drawCube(GLAutoDrawable drawable, float x, float y, float z, float width, float height, float lenght){
-		
+
+	private void drawCube(GLAutoDrawable drawable, float x, float y, float z, float width, float height, float lenght) {
+
 		GL2 gl = drawable.getGL().getGL2();
-		
-		//gl.glPushMatrix();
+
+		// gl.glPushMatrix();
 
 		gl.glColor3f(0.6f, 0.6f, 0.6f);
-		
+
 		gl.glBegin(GL2.GL_QUADS);
 
 		x = -x;
 		z = -z;
 
 		// Left Face (comprimentoio,altura,largura)
-		//gl.glTexCoord2f(0.0f, 0.0f);
+		// gl.glTexCoord2f(0.0f, 0.0f);
 		gl.glVertex3f(-lenght / 2 + z, -height / 2 + y, width / 2 + x);// frente
 																		// baixo
-		//gl.glTexCoord2f(1.0f, 0.0f);
+		// gl.glTexCoord2f(1.0f, 0.0f);
 		gl.glVertex3f(lenght / 2 + z, -height / 2 + y, width / 2 + x);// atras
 																		// baixo
-		//gl.glTexCoord2f(1.0f, 1.0f);
+		// gl.glTexCoord2f(1.0f, 1.0f);
 		gl.glVertex3f(lenght / 2 + z, height / 2 + y, width / 2 + x);// atras
 																		// cima
-		//gl.glTexCoord2f(0.0f, 1.0f);
+		// gl.glTexCoord2f(0.0f, 1.0f);
 		gl.glVertex3f(-lenght / 2 + z, height / 2 + y, width / 2 + x);// frente
 																		// cima
 
 		// Right face
-		//gl.glTexCoord2f(1.0f, 0.0f);
+		// gl.glTexCoord2f(1.0f, 0.0f);
 		gl.glVertex3f(-lenght / 2 + z, -height / 2 + y, -width / 2 + x);// frente
 																		// baixo
-		//gl.glTexCoord2f(1.0f, 1.0f);
+		// gl.glTexCoord2f(1.0f, 1.0f);
 		gl.glVertex3f(-lenght / 2 + z, height / 2 + y, -width / 2 + x);// frente
 																		// cima
-		//gl.glTexCoord2f(0.0f, 1.0f);
+		// gl.glTexCoord2f(0.0f, 1.0f);
 		gl.glVertex3f(lenght / 2 + z, height / 2 + y, -width / 2 + x);// atras
 																		// Cima
-		//gl.glTexCoord2f(0.0f, 0.0f);
+		// gl.glTexCoord2f(0.0f, 0.0f);
 		gl.glVertex3f(lenght / 2 + z, -height / 2 + y, -width / 2 + x);// atras
 																		// baixo
 
 		// Top Face
-		//gl.glTexCoord2f(0.0f, 1.0f);
+		// gl.glTexCoord2f(0.0f, 1.0f);
 		gl.glVertex3f(-lenght / 2 + z, height / 2 + y, -width / 2 + x);// direita
 																		// cima
-		//gl.glTexCoord2f(0.0f, 0.0f);
+		// gl.glTexCoord2f(0.0f, 0.0f);
 		gl.glVertex3f(-lenght / 2 + z, height / 2 + y, width / 2 + x);// esquerda
 																		// cima
-		//gl.glTexCoord2f(1.0f, 0.0f);
+		// gl.glTexCoord2f(1.0f, 0.0f);
 		gl.glVertex3f(lenght / 2 + z, height / 2 + y, width / 2 + x);// esquerda
 																		// baixo
-		//gl.glTexCoord2f(1.0f, 1.0f);
+		// gl.glTexCoord2f(1.0f, 1.0f);
 		gl.glVertex3f(lenght / 2 + z, height / 2 + y, -width / 2 + x);// direita
 																		// baixo
 
 		// Bottom Face
-		//gl.glTexCoord2f(1.0f, 1.0f);
+		// gl.glTexCoord2f(1.0f, 1.0f);
 		gl.glVertex3f(-lenght / 2 + z, -height / 2 + y, -width / 2 + x);// direita
 																		// cima
-		//gl.glTexCoord2f(0.0f, 1.0f);
+		// gl.glTexCoord2f(0.0f, 1.0f);
 		gl.glVertex3f(lenght / 2 + z, -height / 2 + y, -width / 2 + x);// direita
 																		// baixo
-		//gl.glTexCoord2f(0.0f, 0.0f);
+		// gl.glTexCoord2f(0.0f, 0.0f);
 		gl.glVertex3f(lenght / 2 + z, -height / 2 + y, width / 2 + x);// esquerda
 																		// baixo
-		//gl.glTexCoord2f(1.0f, 0.0f);
+		// gl.glTexCoord2f(1.0f, 0.0f);
 		gl.glVertex3f(-lenght / 2 + z, -height / 2 + y, width / 2 + x);// esquerda
 																		// cima
 
 		// Front face
-		//gl.glTexCoord2f(1.0f, 0.0f);
+		// gl.glTexCoord2f(1.0f, 0.0f);
 		gl.glVertex3f(lenght / 2 + z, -height / 2 + y, -width / 2 + x);// direita
 																		// baixo
-		//gl.glTexCoord2f(1.0f, 1.0f);
+		// gl.glTexCoord2f(1.0f, 1.0f);
 		gl.glVertex3f(lenght / 2 + z, height / 2 + y, -width / 2 + x);// direita
 																		// cima
-		//gl.glTexCoord2f(0.0f, 1.0f);
+		// gl.glTexCoord2f(0.0f, 1.0f);
 		gl.glVertex3f(lenght / 2 + z, height / 2 + y, width / 2 + x);// esquerda
 																		// Cima
-		//gl.glTexCoord2f(0.0f, 0.0f);
+		// gl.glTexCoord2f(0.0f, 0.0f);
 		gl.glVertex3f(lenght / 2 + z, -height / 2 + y, width / 2 + x);// esquerda
 																		// baixo
 
 		// back Face
-		//gl.glTexCoord2f(0.0f, 0.0f);
+		// gl.glTexCoord2f(0.0f, 0.0f);
 		gl.glVertex3f(-lenght / 2 + z, -height / 2 + y, -width / 2 + x);// direita
 																		// baixo
-		//gl.glTexCoord2f(1.0f, 0.0f);
+		// gl.glTexCoord2f(1.0f, 0.0f);
 		gl.glVertex3f(-lenght / 2 + z, -height / 2 + y, width / 2 + x);// esquerda
 																		// baixo
-		//gl.glTexCoord2f(1.0f, 1.0f);
+		// gl.glTexCoord2f(1.0f, 1.0f);
 		gl.glVertex3f(-lenght / 2 + z, height / 2 + y, width / 2 + x);// esquerda
 																		// Cima
-		//gl.glTexCoord2f(0.0f, 1.0f);
+		// gl.glTexCoord2f(0.0f, 1.0f);
 		gl.glVertex3f(-lenght / 2 + z, height / 2 + y, -width / 2 + x);// direita
 		// cima
 		gl.glEnd();
 	}
 
-	private void createWall(GLAutoDrawable drawable){
-		
+	private void createRing(GLAutoDrawable drawable, int start, int end, int height, int texture, int floor) {
+
 		GL2 gl = drawable.getGL().getGL2();
-		
-		gl.glPushMatrix();
-		
-		
-		//Parte superior da primeira camada externa
-		gl.glPushMatrix();
-		gl.glColor3f(0.6f, 0.6f, 0.6f);
+
+		int size = 24;
+		if (floor == 5) {
+			size = 11;
+		}
+
 		GLUquadric disk = glu.gluNewQuadric();
-		gl.glTranslatef(1, 6, 1);
-		gl.glRotatef(90, -1, 0, 0);
-		glu.gluDisk(disk, 11.5, 12.5, 25, 5);
-		gl.glPopMatrix();
-		
-		// Primeira camada
-		gl.glPushMatrix();
-		gl.glColor3f(0.6f, 0.6f, 0.6f);
-		gl.glTranslatef(1, 6, 1);
-		gl.glRotatef(90, -1, 0, 0);
-		GLUquadric disc = glu.gluNewQuadric();
-		glu.gluCylinder(disc, 12.5, 12.5, 6, 30, 1);
-		glu.gluCylinder(disc, 11.5, 11.5, 6, 30, 1);
-		gl.glPopMatrix();
-		
-		//Segunda camada
-		gl.glPushMatrix();
-		gl.glColor3f(0.0f, 0.6f, 0.0f);
-		gl.glTranslatef(1, 6, 1);
-		gl.glRotatef(90, -1, 0, 0);
-		GLUquadric arquibancada1 = glu.gluNewQuadric();
-		glu.gluCylinder(arquibancada1, 11.4, 11.4, 4.5, 30, 1);
-		glu.gluCylinder(arquibancada1, 10.5, 11.5, 4.5, 30, 1);
-		glu.gluCylinder(arquibancada1, 10.5, 10.5, 4.5, 30, 1);
-		gl.glPopMatrix();
-		
-		//Terceira camada
-		gl.glPushMatrix();
-		gl.glColor3f(1.0f, 0.0f, 0.0f);
-		gl.glTranslatef(1, 6, 1);
-		gl.glRotatef(90, -1, 0, 0);
-		GLUquadric arquibancada2 = glu.gluNewQuadric();
-		glu.gluCylinder(arquibancada2, 10.4, 10.4, 3.7, 30, 1);
-		glu.gluCylinder(arquibancada2, 8.5, 10.4, 3.7, 30, 1);
-		glu.gluCylinder(arquibancada2, 8.5, 8.5, 3.7, 30, 1);
-		gl.glPopMatrix();
-		
-		//Quinta camada
-		gl.glPushMatrix();
-		gl.glColor3f(0.0f, 1.0f, 1.0f);
-		gl.glTranslatef(1, 6, 1);
-		gl.glRotatef(90, -1, 0, 0);
-		GLUquadric arquibancada4 = glu.gluNewQuadric();
-		glu.gluCylinder(arquibancada4, 8.4, 8.4, 3.2, 30, 1);
-		glu.gluCylinder(arquibancada4, 6.5, 8.4, 3.2, 30, 1);
-		glu.gluCylinder(arquibancada4, 6.5, 6.5, 3.2, 30, 1);
-		gl.glPopMatrix();
-		
-		//Quinta camada
-		gl.glPushMatrix();
-		gl.glColor3f(0.5f, 1.0f, 0.5f);
-		gl.glTranslatef(1, 6, 1);
-		gl.glRotatef(90, -1, 0, 0);
-		GLUquadric arquibancada5 = glu.gluNewQuadric();
-		glu.gluCylinder(arquibancada5, 6.4, 6.4, 2.5, 30, 1);
-		glu.gluCylinder(arquibancada5, 5.4, 6.4, 2.5, 30, 1);
-		glu.gluCylinder(arquibancada5, 5.4, 5.4, 2.5, 30, 1);
-		gl.glPopMatrix();
+		int x = 0;
+		int y = 0;
+		for (float j = 0; j < height; j += 0.02) {
+			gl.glPushMatrix();
+			gl.glColor3f(0.6f, 0.6f, 0.6f);
+			gl.glTranslatef(1, j, 1);
+			gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
+			gl.glRotatef(90, -1, 0, 0);
+			x = 5;
+			y = 10;
+			for (int i = 0; i < size; i++) {
+				glu.gluPartialDisk(disk, start, start + 0.5, 5, 1, x, y);
+				x += 20;
+			}
+
+			gl.glPopMatrix();
+		}
+
+		for (float j = 0; j < height; j += 0.02) {
+			gl.glPushMatrix();
+			gl.glColor3f(0.6f, 0.6f, 0.6f);
+			gl.glTranslatef(1, j, 1);
+			gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
+			gl.glRotatef(90, -1, 0, 0);
+			x = 5;
+			y = 10;
+			for (int i = 0; i < size; i++) {
+				if (i < 11) {
+					glu.gluPartialDisk(disk, end - 0.5, end, 5, 1, x, y);
+				} else {
+					glu.gluPartialDisk(disk, end - 4.5, end - 4, 5, 1, x, y);
+				}
+
+				x += 20;
+			}
+
+			gl.glPopMatrix();
+		}
+
+		int limit = 11;
+		if (floor == 1) {
+			limit = 10;
+		}
+
+		for (float j = height - 1; j < height; j += 0.02) {
+			gl.glPushMatrix();
+			gl.glColor3f(0.6f, 0.6f, 0.6f);
+			gl.glTranslatef(1, j, 1);
+			gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
+			x = 5;
+			y = 15;
+			gl.glRotatef(90, -1, 0, 0);
+			int m = 0;
+			for (int i = 0; i < size; i++) {
+				if (i < limit) {
+					glu.gluPartialDisk(disk, start, end, 5, 1, m, 20);
+				} else {
+					glu.gluPartialDisk(disk, start, end - 4, 5, 1, m, 20);
+				}
+				m += 20;
+			}
+			gl.glPopMatrix();
+		}
 
 		gl.glPopMatrix();
-		
+
 		gl.glFlush();
 	}
 }

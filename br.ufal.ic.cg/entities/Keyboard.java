@@ -19,6 +19,24 @@ public class Keyboard implements KeyListener {
 	static int shoulder = 0;
 
 	public void keyPressed(KeyEvent event) {
+		
+		if (event.getKeyCode() == KeyEvent.VK_C) {
+			camera.doorAngle += 2;
+			
+			if(camera.doorAngle >= 100){
+				camera.doorAngle = 100;
+			}
+		}
+		
+		if (event.getKeyCode() == KeyEvent.VK_X) {
+			camera.doorAngle -= 2;
+			
+			if(camera.doorAngle <= -30){
+				camera.doorAngle = -30;
+			}
+			
+		}
+		
 		if (event.getKeyCode() == KeyEvent.VK_UP) {
 			camera.cameraElevation += 2;
 		}
@@ -35,12 +53,12 @@ public class Keyboard implements KeyListener {
 			camera.cameraAzimuth -= 3;
 		}
 
-		if (event.getKeyCode() == KeyEvent.VK_I) {
-			camera.cameraSpeed = 0.1F;
+		if (event.getKeyCode() == KeyEvent.VK_W) {
+			camera.cameraSpeed = 3F;
 		}
 
-		if (event.getKeyCode() == KeyEvent.VK_O) {
-			camera.cameraSpeed = -0.1F;
+		if (event.getKeyCode() == KeyEvent.VK_S) {
+			camera.cameraSpeed = -3F;
 		}
 
 		if (event.getKeyCode() == KeyEvent.VK_D) {
@@ -69,7 +87,7 @@ public class Keyboard implements KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent event) {
-		if (event.getKeyCode() == KeyEvent.VK_I || event.getKeyCode() == KeyEvent.VK_O) {
+		if (event.getKeyCode() == KeyEvent.VK_W || event.getKeyCode() == KeyEvent.VK_S) {
 			camera.cameraSpeed = 0;
 		}
 
