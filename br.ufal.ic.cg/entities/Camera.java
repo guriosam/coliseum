@@ -14,7 +14,8 @@ public class Camera implements GLEventListener {
 	private GLUT glut;
 	private Textures textures;
 
-	float doorAngle = 100;
+	float doorAngle = 60;
+	float distanceDoor = -53;
 
 	// Define camera variables
 	float cameraAzimuth = 90.0f, cameraSpeed = 0.0f, cameraElevation = 0.0f;
@@ -194,16 +195,19 @@ public class Camera implements GLEventListener {
 		createCube(drawable, 3, groundWidth, 0.2f, groundHeight, -0.5f, 0, 0, 0, 0, 0);
 
 		createRing(drawable, 53, 64, 25, 2, 5);
-		createRing(drawable, 42, 64, 20, 4, 4);
-		createRing(drawable, 31, 64, 15, 15, 3);
-		createRing(drawable, 20, 64, 10, 5, 2);
-		createRing(drawable, 0, 64, 5, 3, 1);
+		 createRing(drawable, 42, 64, 20, 4, 4);
+		 createRing(drawable, 31, 64, 15, 15, 3);
+		 createRing(drawable, 20, 64, 10, 5, 2);
+		 createRing(drawable, 0, 64, 5, 3, 1);
+
+		// Grades
+		createRingLines(drawable, 53, 64, 4, 3, 5);
 
 		// Ramp
-		// createCube(drawable, 10, 8, 0.2f, 3, -32f, 3, 13, -45, 45, 25);
+		createCube(drawable, 10, 8, 0.2f, 3, -57f, 3, 24, -45, 45, 25);
 
 		// Door
-		// createCube(drawable, 10, 0.2f, 5, 8, -28f, 3, 21, 0, doorAngle, 0);
+		createCube(drawable, 10, 0.2f, 5, 3.5f, distanceDoor, 3, 33, 0, doorAngle, 0);
 
 		/// Gladiador 1
 		int alturaGladiador1 = 8;
@@ -249,20 +253,22 @@ public class Camera implements GLEventListener {
 		createCube(drawable, 5, 0.3f, 1, 0.3f, deslocLeao + 0.2f, alturaLeao - 1, -1.2f, -1, 0, 0);
 		// Rabo
 		createCube(drawable, 5, 0.2f, 0.2f, 1, deslocLeao + 0.5f, alturaLeao, -2f, 0, 0, 0);
+
+		/// Lança
+		int alturaLanca = 7;
+		int deslocLanca = 3;
+		// Cabo
+		createCube(drawable, 5, 0.1f, 5, 0.1f, deslocLanca + 0.8f, alturaLanca, 0.5f, 45, 0, 0);
+		// Ponta
+		createCube(drawable, 200, 0.2f, 0.1f, 0.1f, deslocLanca + 2.6f, alturaLanca - 1.8f, 0.5f, 60, 45, 15);
+
+		/// Espada
 		
-		///Lança
+
+		/// Escudo
 		
-		
-		///Espada
-		
-		
-		///Escudo
-		
-		
-		//Pedra ?
-		
-		
-		
+
+		// Pedra ?
 
 	}
 
@@ -289,6 +295,7 @@ public class Camera implements GLEventListener {
 		gl.glEnable(GL2.GL_TEXTURE_2D);
 		gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
 		gl.glColor3f(1f, 1f, 1f);
+
 		// gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MIN_FILTER,
 		// GL2.GL_LINEAR_MIPMAP_NEAREST);
 		// gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MAG_FILTER,
@@ -526,15 +533,20 @@ public class Camera implements GLEventListener {
 		if (floor == 5) {
 			size = 11;
 		}
+		gl.glEnable(GL2.GL_TEXTURE_2D);
+		gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
 
 		GLUquadric disk = glu.gluNewQuadric();
 		int x = 0;
 		int y = 0;
 		for (float j = 0; j < height; j += 0.02) {
 			gl.glPushMatrix();
-			gl.glColor3f(0.6f, 0.6f, 0.6f);
+			// gl.glColor3f(0.6f, 0.6f, 0.6f);
 			gl.glTranslatef(1, j, 1);
-			gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
+		
+			glu.gluQuadricTexture(disk, true);
+			gl.glColor3f(1f, 1f, 1f);
+
 			gl.glRotatef(90, -1, 0, 0);
 			x = 5;
 			y = 10;
@@ -544,13 +556,18 @@ public class Camera implements GLEventListener {
 			}
 
 			gl.glPopMatrix();
+			//gl.glDisable(GL2.GL_TEXTURE_2D);
 		}
 
 		for (float j = 0; j < height; j += 0.02) {
 			gl.glPushMatrix();
-			gl.glColor3f(0.6f, 0.6f, 0.6f);
+			// gl.glColor3f(0.6f, 0.6f, 0.6f);
 			gl.glTranslatef(1, j, 1);
-			gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
+			//gl.glEnable(GL2.GL_TEXTURE_2D);
+			//gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
+			glu.gluQuadricTexture(disk, true);
+			gl.glColor3f(1f, 1f, 1f);
+
 			gl.glRotatef(90, -1, 0, 0);
 			x = 5;
 			y = 10;
@@ -563,8 +580,8 @@ public class Camera implements GLEventListener {
 
 				x += 20;
 			}
-
 			gl.glPopMatrix();
+			//gl.glDisable(GL2.GL_TEXTURE_2D);
 		}
 
 		int limit = 11;
@@ -574,9 +591,14 @@ public class Camera implements GLEventListener {
 
 		for (float j = height - 1; j < height; j += 0.02) {
 			gl.glPushMatrix();
-			gl.glColor3f(0.6f, 0.6f, 0.6f);
+			// gl.glColor3f(0.6f, 0.6f, 0.6f);
 			gl.glTranslatef(1, j, 1);
-			gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
+			// gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
+			glu.gluQuadricTexture(disk, true);
+			//gl.glEnable(GL2.GL_TEXTURE_2D);
+			//gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
+			gl.glColor3f(1f, 1f, 1f);
+
 			x = 5;
 			y = 15;
 			gl.glRotatef(90, -1, 0, 0);
@@ -590,10 +612,74 @@ public class Camera implements GLEventListener {
 				m += 20;
 			}
 			gl.glPopMatrix();
+			//gl.glDisable(GL2.GL_TEXTURE_2D);
 		}
 
 		gl.glPopMatrix();
+		gl.glEnd();
 
 		gl.glFlush();
+
 	}
+
+	private void createRingLines(GLAutoDrawable drawable, int start, int end, int height, int texture, int floor) {
+
+		GL2 gl = drawable.getGL().getGL2();
+
+		int size = 24;
+		if (floor == 5) {
+			size = 11;
+		}
+
+		GLUquadric disk = glu.gluNewQuadric();
+		float x = 0;
+		int y = 0;
+		/*
+		 * for (float j = 0; j < height; j += 0.02) { gl.glPushMatrix();
+		 * gl.glColor3f(0.6f, 0.6f, 0.6f); gl.glTranslatef(1, j, 1);
+		 * gl.glBindTexture(GL2.GL_TEXTURE_2D, texture); gl.glRotatef(90, -1, 0,
+		 * 0); x = -5; y = 10; for (int i = 0; i < size; i++) {
+		 * glu.gluPartialDisk(disk, start, start + 0.5, 5, 1, x, y); x += 20; }
+		 * 
+		 * gl.glPopMatrix(); }
+		 */
+		for (float j = 0; j < height; j += 0.02) {
+			gl.glPushMatrix();
+			gl.glColor3f(0.6f, 0.6f, 0.6f);
+			gl.glTranslatef(1, j, 1);
+			gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
+			gl.glRotatef(90, -1, 0, 0);
+			x = 15.5f;
+			y = 10;
+			for (int i = 0; i < size; i++) {
+				if (i < 11) {
+					glu.gluPartialDisk(disk, end - 0.5, end, 5, 1, x, 0.5f);
+					glu.gluPartialDisk(disk, end - 0.5, end, 5, 1, x + 1f, 0.5f);
+					glu.gluPartialDisk(disk, end - 0.5, end, 5, 1, x + 2f, 0.5f);
+					glu.gluPartialDisk(disk, end - 0.5, end, 5, 1, x + 3f, 0.5f);
+					glu.gluPartialDisk(disk, end - 0.5, end, 5, 1, x + 4f, 0.5f);
+					glu.gluPartialDisk(disk, end - 0.5, end, 5, 1, x + 5f, 0.5f);
+					glu.gluPartialDisk(disk, end - 0.5, end, 5, 1, x + 6f, 0.5f);
+					glu.gluPartialDisk(disk, end - 0.5, end, 5, 1, x + 7f, 0.5f);
+					glu.gluPartialDisk(disk, end - 0.5, end, 5, 1, x + 8f, 0.5f);
+				} else {
+					// glu.gluPartialDisk(disk, end - 4.5, end - 4, 5, 1, x,
+					// y);
+				}
+
+				if (i < size - 2) {
+					x += 20;
+				}
+
+			}
+
+			gl.glPopMatrix();
+		}
+
+		gl.glEnd();
+
+		gl.glFlush();
+
+	}
+
 }

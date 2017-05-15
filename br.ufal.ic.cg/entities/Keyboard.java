@@ -4,13 +4,13 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class Keyboard implements KeyListener {
-	
+
 	private Camera camera;
-	
-	public Keyboard(Camera camera){
+
+	public Keyboard(Camera camera) {
 		this.camera = camera;
 	}
-	
+
 	@Override
 	public void keyTyped(KeyEvent e) {
 
@@ -19,24 +19,35 @@ public class Keyboard implements KeyListener {
 	static int shoulder = 0;
 
 	public void keyPressed(KeyEvent event) {
-		
+
 		if (event.getKeyCode() == KeyEvent.VK_C) {
 			camera.doorAngle += 2;
-			
-			if(camera.doorAngle >= 100){
-				camera.doorAngle = 100;
+			camera.distanceDoor += 0.05;
+
+			if (camera.doorAngle >= 60) {
+				camera.doorAngle = 60;
 			}
+
+			if (camera.distanceDoor > -53) {
+				camera.distanceDoor = -53;
+			}
+
 		}
-		
+
 		if (event.getKeyCode() == KeyEvent.VK_X) {
 			camera.doorAngle -= 2;
-			
-			if(camera.doorAngle <= -30){
+			camera.distanceDoor -= 0.03;
+
+			if (camera.doorAngle <= -30) {
 				camera.doorAngle = -30;
 			}
-			
+
+			if (camera.distanceDoor < -54) {
+				camera.distanceDoor = -54;
+			}
+
 		}
-		
+
 		if (event.getKeyCode() == KeyEvent.VK_UP) {
 			camera.cameraElevation += 2;
 		}
@@ -92,6 +103,5 @@ public class Keyboard implements KeyListener {
 		}
 
 	}
-
 
 }
