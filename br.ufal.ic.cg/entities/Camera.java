@@ -190,24 +190,37 @@ public class Camera implements GLEventListener {
 
 	private void createColiseum(GLAutoDrawable drawable) {
 		// Floor
-		float groundWidth = 500;
-		float groundHeight = 500;
+		float groundWidth = 200;
+		float groundHeight = 200;
 		createCube(drawable, 3, groundWidth, 0.2f, groundHeight, -0.5f, 0, 0, 0, 0, 0);
 
-		createRing(drawable, 53, 64, 25, 5, 5);
-		createRing(drawable, 42, 64, 20, textures.textureWall, 4);
-		createRing(drawable, 31, 64, 15, textures.textureWall, 3);
-		createRing(drawable, 20, 64, 10, textures.textureWall, 2);
-		createRing(drawable, 0, 64, 5, textures.textureWall, 1);
+		int textureWall = textures.pedra;
+
+		Floor1 floor1 = new Floor1(glu, textures);
+		floor1.createRing(drawable, 0, 64, 5, textureWall, 1);
+		Floor2 floor2 = new Floor2(glu, textures);
+		floor2.createRing(drawable, 25, 64, 5, textureWall, 2);
+		Floor3 floor3 = new Floor3(glu, textures);
+		floor3.createRing(drawable, 31, 64, 5, textureWall, 3);
+		Floor3 floor4 = new Floor3(glu, textures);
+		floor4.createRing(drawable, 37, 64, 5, textureWall, 4);
+		Floor5 floor5 = new Floor5(glu, textures);
+		floor5.createRing(drawable, 43, 64, 5, textureWall, 5);
+		
+
+		// createRing(drawable, 47, 64, 30, textureWall, 5);
+		// createRing(drawable, 40, 64, 25, textureWall, 4);
+		// createRing(drawable, 33, 64, 15, textureWall, 3);
+		// createRing(drawable, 25, 64, 10, textureWall, 2);
 
 		// Grades
-		createRingLines(drawable, 53, 64, 4, 3, 5);
+		// createRingLines(drawable, 53, 64, 4, 3, 5);
 
 		// Ramp
-		createCube(drawable, 10, 8, 0.2f, 3, -57f, 3, 24, -45, 45, 25);
+		createCube(drawable, textures.pedra, 8, 0.2f, 3, -57f, 3, 24, -45, 45, 25);
 
 		// Door
-		createCube(drawable, 10, 0.2f, 5, 3.5f, distanceDoor, 3, 33, 0, doorAngle, 0);
+		createCube(drawable, textures.door, 0.2f, 5, 3.5f, distanceDoor, 3, 31.5f, 0, doorAngle, 0);
 
 		createGladiadores(drawable);
 		createLeao(drawable);
@@ -449,209 +462,89 @@ public class Camera implements GLEventListener {
 		GLUquadric disk = glu.gluNewQuadric();
 		int x = 0;
 		int y = 0;
-		
-		//inner ring
-		for (float j = 0; j < height; j += 0.02) {
 
-			gl.glPushMatrix();
-			gl.glColor3f(0.6f, 0.6f, 0.6f);
-			gl.glTranslatef(1, j, 1);
+		// inner ring
+		createInnerRing(drawable, start, end, height, texture, floor);
+		// outer ring
+		createOuterRing(drawable, start, end, height, texture, floor);
 
-			glu.gluQuadricTexture(disk, true);
-			gl.glColor3f(1f, 1f, 1f);
-
-			gl.glRotatef(90, -1, 0, 0);
-			x = 5;
-			y = 10;
-			for (int i = 0; i < size; i++) {
-				if (floor != 5) {
-					glu.gluPartialDisk(disk, start, start + 0.5, 5, 1, x, y);
-				}
-				x += 20;
-			}
-
-			gl.glPopMatrix();
-		}
-		
-		//outer ring
-
-		for (float j = 0; j < height - 0.5; j += 0.02) {
-			gl.glPushMatrix();
-			// gl.glColor3f(0.6f, 0.6f, 0.6f);
-			gl.glTranslatef(1, j, 1);
-			// gl.glEnable(GL2.GL_TEXTURE_2D);
-			// gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
-			glu.gluQuadricTexture(disk, true);
-			gl.glColor3f(1f, 1f, 1f);
-
-			gl.glRotatef(90, -1, 0, 0);
-			x = 5;
-			y = 10;
-			for (int i = 0; i < size; i++) {
-				if (i < 11) {
-					glu.gluPartialDisk(disk, end - 0.5, end, 5, 1, x, y);
-				} else {
-					glu.gluPartialDisk(disk, end - 4.5, end - 4, 5, 1, x, y);
-				}
-
-				x += 20;
-			}
-			gl.glPopMatrix();
-			// gl.glDisable(GL2.GL_TEXTURE_2D);
-		}
-		
-		//Floor
+		// Floor
 
 		int limit = 11;
-		if (floor == 1) {
-			limit = 10;
-			gl.glBindTexture(GL2.GL_TEXTURE_2D, textures.textureSand);
 
-			for (float j = height - 1; j < height; j += 0.02) {
-				gl.glPushMatrix();
-				// gl.glColor3f(0.6f, 0.6f, 0.6f);
-				gl.glTranslatef(1, j, 1);
-				// gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
-				glu.gluQuadricTexture(disk, true);
-				// gl.glEnable(GL2.GL_TEXTURE_2D);
-				// gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
-				gl.glColor3f(1f, 1f, 1f);
-
-				x = 5;
-				y = 15;
-				gl.glRotatef(90, -1, 0, 0);
-				int m = 0;
-				for (int i = 0; i < size; i++) {
-					glu.gluPartialDisk(disk, start, start + 20, 5, 1, m, 20);
-					m += 20;
-				}
-				gl.glPopMatrix();
-				// gl.glDisable(GL2.GL_TEXTURE_2D);
-			}
-			
+		if (floor > 3) {
+			gl.glBindTexture(GL2.GL_TEXTURE_2D, textures.textureEdge);
+		} else {
 			gl.glBindTexture(GL2.GL_TEXTURE_2D, textures.floor);
+		}
+		for (float j = height - 1; j < height; j += 0.02) {
+			gl.glPushMatrix();
+			gl.glTranslatef(1, j, 1);
+			glu.gluQuadricTexture(disk, true);
+			gl.glColor3f(1f, 1f, 1f);
 
+			x = 5;
+			y = 15;
+			gl.glRotatef(90, -1, 0, 0);
+			int m = 0;
+			for (int i = 0; i < size; i++) {
+				if (floor < 4) {
+					if (i < limit) {
+						glu.gluPartialDisk(disk, start + 1, end - 1, 5, 1, m, 20);
+					} else {
+						glu.gluPartialDisk(disk, start + 1, end - 5, 5, 1, m, 20);
+					}
+				}
+				m += 20;
+			}
+			gl.glPopMatrix();
+		}
+
+		gl.glBindTexture(GL2.GL_TEXTURE_2D, textures.pedra);
+
+		// Borda Externa
+		for (float j = height - 1; j < height; j += 0.02) {
+			gl.glPushMatrix();
+			gl.glTranslatef(1, j, 1);
+			glu.gluQuadricTexture(disk, true);
+			gl.glColor3f(1f, 1f, 1f);
+			x = 5;
+			y = 15;
+			gl.glRotatef(90, -1, 0, 0);
+			int m = 0;
+			for (int i = 0; i < size; i++) {
+				if (i < limit) {
+					glu.gluPartialDisk(disk, end - 1, end, 5, 1, m, 20);
+				} else {
+					glu.gluPartialDisk(disk, end - 4, end - 3, 5, 1, m, 20);
+				}
+				m += 20;
+			}
+			gl.glPopMatrix();
+		}
+
+		gl.glBindTexture(GL2.GL_TEXTURE_2D, textures.pedraEscura);
+		// Borda interna
+		if (floor < 4) {
 			for (float j = height - 1; j < height; j += 0.02) {
 				gl.glPushMatrix();
-				// gl.glColor3f(0.6f, 0.6f, 0.6f);
 				gl.glTranslatef(1, j, 1);
-				// gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
 				glu.gluQuadricTexture(disk, true);
-				// gl.glEnable(GL2.GL_TEXTURE_2D);
-				// gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
 				gl.glColor3f(1f, 1f, 1f);
-
 				x = 5;
 				y = 15;
 				gl.glRotatef(90, -1, 0, 0);
 				int m = 0;
 				for (int i = 0; i < size; i++) {
 					if (i < limit) {
-						glu.gluPartialDisk(disk, start + 20, end - 0.5, 5, 1, m, 20);
+						glu.gluPartialDisk(disk, start, start + 1, 5, 1, m, 20);
 					} else {
-						glu.gluPartialDisk(disk, start + 20, end - 4, 5, 1, m, 20);
-					}
-					m += 20;
-				}
-				gl.glPopMatrix();
-				// gl.glDisable(GL2.GL_TEXTURE_2D);
-			}
-			
-			gl.glBindTexture(GL2.GL_TEXTURE_2D, textures.textureWall);
-			
-			//borda
-			for (float j = height - 1; j < height; j += 0.02) {
-				gl.glPushMatrix();
-				// gl.glColor3f(0.6f, 0.6f, 0.6f);
-				gl.glTranslatef(1, j, 1);
-				// gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
-				glu.gluQuadricTexture(disk, true);
-				// gl.glEnable(GL2.GL_TEXTURE_2D);
-				// gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
-				gl.glColor3f(1f, 1f, 1f);
-
-				x = 5;
-				y = 15;
-				gl.glRotatef(90, -1, 0, 0);
-				int m = 0;
-				for (int i = 0; i < size; i++) {
-					if (floor != 5) {
-						if (i < limit) {
-							glu.gluPartialDisk(disk, end - 0.5, end, 5, 1, m, 20);
-						} else {
-							glu.gluPartialDisk(disk, end - 4.5, end - 4, 5, 1, m, 20);
-						}
+						glu.gluPartialDisk(disk, start, start + 1, 5, 1, m, 20);
 					}
 					m += 20;
 				}
 				gl.glPopMatrix();
 			}
-
-		} else {
-
-			if (floor > 3) {
-				gl.glBindTexture(GL2.GL_TEXTURE_2D, textures.textureEdge);
-			} else {
-				gl.glBindTexture(GL2.GL_TEXTURE_2D, textures.floor);
-			}
-			for (float j = height - 1; j < height; j += 0.02) {
-				gl.glPushMatrix();
-				// gl.glColor3f(0.6f, 0.6f, 0.6f);
-				gl.glTranslatef(1, j, 1);
-				// gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
-				glu.gluQuadricTexture(disk, true);
-				// gl.glEnable(GL2.GL_TEXTURE_2D);
-				// gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
-				gl.glColor3f(1f, 1f, 1f);
-
-				x = 5;
-				y = 15;
-				gl.glRotatef(90, -1, 0, 0);
-				int m = 0;
-				for (int i = 0; i < size; i++) {
-					if (floor != 5) {
-						if (i < limit) {
-							glu.gluPartialDisk(disk, start, end - 0.5, 5, 1, m, 20);
-						} else {
-							glu.gluPartialDisk(disk, start, end - 4, 5, 1, m, 20);
-						}
-					}
-					m += 20;
-				}
-				gl.glPopMatrix();
-			}
-			
-			gl.glBindTexture(GL2.GL_TEXTURE_2D, textures.textureWall);
-			
-			//borda
-			for (float j = height - 1; j < height; j += 0.02) {
-				gl.glPushMatrix();
-				// gl.glColor3f(0.6f, 0.6f, 0.6f);
-				gl.glTranslatef(1, j, 1);
-				// gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
-				glu.gluQuadricTexture(disk, true);
-				// gl.glEnable(GL2.GL_TEXTURE_2D);
-				// gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
-				gl.glColor3f(1f, 1f, 1f);
-
-				x = 5;
-				y = 15;
-				gl.glRotatef(90, -1, 0, 0);
-				int m = 0;
-				for (int i = 0; i < size; i++) {
-					if (floor != 5) {
-						if (i < limit) {
-							glu.gluPartialDisk(disk, end - 0.5, end, 5, 1, m, 20);
-						} else {
-							glu.gluPartialDisk(disk, end - 4.5, end - 4, 5, 1, m, 20);
-						}
-					}
-					m += 20;
-				}
-				gl.glPopMatrix();
-			}
-			
-
 		}
 
 		gl.glPopMatrix();
@@ -659,6 +552,120 @@ public class Camera implements GLEventListener {
 
 		gl.glFlush();
 
+	}
+
+	private void createOuterRing(GLAutoDrawable drawable, int start, int end, int height, int texture, int floor) {
+
+		GL2 gl = drawable.getGL().getGL2();
+
+		// Circulo Completo
+		int quant = 24;
+
+		if (floor == 5) {
+			// 3/4 de Círculo
+			quant = 11;
+		}
+
+		gl.glEnable(GL2.GL_TEXTURE_2D);
+		gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
+
+		GLUquadric disk = glu.gluNewQuadric();
+
+		int x = 0;
+		int y = 0;
+
+		for (int f = 0; f < floor; f++) {
+			float k = 0;
+			for (float j = (5 * f); j < height - 0.5; j += 0.02) {
+				gl.glPushMatrix();
+				gl.glTranslatef(1, j, 1);
+				glu.gluQuadricTexture(disk, true);
+				gl.glColor3f(1f, 1f, 1f);
+				gl.glRotatef(90, -1, 0, 0);
+				x = 5;
+				y = 10;
+				for (int i = 0; i < quant; i++) {
+					if (f < 3) {
+						if (i > 6 && i < 11) {
+							// glu.gluPartialDisk(disk, end - 1, end, 5, 1, x,
+							// y);
+						} else {
+							// glu.gluPartialDisk(disk, end - 15 + k, end - 3.5,
+							// 5, 1, x, y);
+						}
+					} else {
+						if (i < 11) {
+							// glu.gluPartialDisk(disk, end - 1, end, 5, 1, x,
+							// y);
+						} else {
+							// glu.gluPartialDisk(disk, end - 4.5, end - 3.5, 5,
+							// 1, x, y);
+						}
+					}
+					x += 20;
+				}
+				gl.glPopMatrix();
+				if (k < 11) {
+					k += 0.015;
+				}
+			}
+		}
+	}
+
+	private void createInnerRing(GLAutoDrawable drawable, int start, int end, int height, int texture, int floor) {
+		GL2 gl = drawable.getGL().getGL2();
+
+		// Circulo Completo
+		int quant = 24;
+
+		if (floor == 5) {
+			// 3/4 de Círculo
+			quant = 11;
+		}
+		gl.glEnable(GL2.GL_TEXTURE_2D);
+		gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
+
+		GLUquadric disk = glu.gluNewQuadric();
+		int x = 0;
+		int y = 0;
+
+		for (int f = 0; f < floor; f++) {
+			float k = 0;
+			for (float j = (5 * f); j < height; j += 0.02) {
+				gl.glPushMatrix();
+				gl.glColor3f(0.6f, 0.6f, 0.6f);
+				gl.glTranslatef(1, j, 1);
+
+				glu.gluQuadricTexture(disk, true);
+				gl.glColor3f(1f, 1f, 1f);
+
+				gl.glRotatef(90, -1, 0, 0);
+				x = 5;
+				y = 10;
+				if (floor > 2) {
+					for (int i = 0; i < quant; i++) {
+						if (floor < 4) {
+							if (f == floor - 1 && floor > 2) {
+								if (start != 0) {
+									glu.gluPartialDisk(disk, start - 8 + k, start + 0.5, 5, 1, x, y);
+								}
+							} else {
+								glu.gluPartialDisk(disk, start, start + 0.5, 5, 1, x, y);
+							}
+						}
+						x += 20;
+					}
+				} else {
+					glu.gluPartialDisk(disk, start, start + 0.5, 30, 5, 0, 360);
+				}
+
+				gl.glPopMatrix();
+				if (k < 11) {
+					k += 0.03;
+				}
+			}
+
+		}
 	}
 
 	private void createRingLines(GLAutoDrawable drawable, int start, int end, int height, int texture, int floor) {

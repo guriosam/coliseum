@@ -28,23 +28,15 @@ public class Textures {
 
 	int face1;
 
-	int textureArFrente;
-	int textureArDir;
-	int textureArDir2;
-	int textureArEsq;
-	int textureArEsq2;
-	int textureArFrente2;
-	int textureChair;
-	int textureChair2;
-
-	int textureJanelaLado;
-	int textureJanelaEmPe;
-
+	int door;
+	
 	int textureSand;
 	int floor;
 	int laranja;
 	int folha;
 	int madeira;
+	int pedra;
+	int pedraEscura;
 
 	public void carregar_texturas(GLAutoDrawable drawable) {
 		GL2 gl = drawable.getGL().getGL2();
@@ -62,7 +54,7 @@ public class Textures {
 			Texture text = TextureIO.newTexture(new File(getClass().getResource("/img/piso2.jpg").getPath()), true);
 			texture = text.getTextureObject(gl);
 
-			Texture piso = TextureIO.newTexture(new File(getClass().getResource("/img/floor2.jpg").getPath()), true);
+			Texture piso = TextureIO.newTexture(new File(getClass().getResource("/img/floor3.jpg").getPath()), true);
 			floor = piso.getTextureObject(gl);
 
 			Texture text2 = TextureIO.newTexture(new File(getClass().getResource("/img/walls_coliseu.jpg").getPath()),
@@ -113,6 +105,15 @@ public class Textures {
 
 			Texture text16 = TextureIO.newTexture(new File(getClass().getResource("/img/madeira.jpg").getPath()), true);
 			madeira = text16.getTextureObject(gl);
+			
+			Texture text17 = TextureIO.newTexture(new File(getClass().getResource("/img/pedra.jpg").getPath()), true);
+			pedra = text17.getTextureObject(gl);
+			
+			Texture text18 = TextureIO.newTexture(new File(getClass().getResource("/img/pedra2.jpg").getPath()), true);
+			pedraEscura = text18.getTextureObject(gl);
+			
+			Texture text19 = TextureIO.newTexture(new File(getClass().getResource("/img/door.jpg").getPath()), true);
+			door = text19.getTextureObject(gl);
 
 		} catch (Exception e) {
 			e.printStackTrace();
