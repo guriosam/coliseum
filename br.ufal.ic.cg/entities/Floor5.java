@@ -52,9 +52,6 @@ public class Floor5 extends Floor {
 					// Parte maior
 					glu.gluPartialDisk(disk, end - 1, end, 5, 1, x, y);
 					glu.gluPartialDisk(disk, end - 7, end - 6, 5, 1, x, y);
-				} else {
-					// Parte menor
-					// glu.gluPartialDisk(disk, end - 7, end - 6, 5, 1, x, y);
 				}
 
 				x += 10;

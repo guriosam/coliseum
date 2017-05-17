@@ -14,6 +14,10 @@ public class Camera implements GLEventListener {
 	private GLUT glut;
 	private Textures textures;
 
+	GL2 gl;
+
+	Light light;
+
 	float doorAngle = 60;
 	float distanceDoor = -53;
 
@@ -25,6 +29,7 @@ public class Camera implements GLEventListener {
 
 	// Set camera orientation
 	float cameraUpx = 0.0f, cameraUpy = 1.0f, cameraUpz = 0.0f;
+	boolean luz;
 
 	public Camera(GLU glu, GLUT glut, Textures textures) {
 		this.glu = glu;
@@ -114,7 +119,7 @@ public class Camera implements GLEventListener {
 
 	public void display(GLAutoDrawable drawable) {
 
-		GL2 gl = drawable.getGL().getGL2();
+		gl = drawable.getGL().getGL2();
 
 		gl.glClear(GL2.GL_COLOR_BUFFER_BIT | GL2.GL_DEPTH_BUFFER_BIT);
 		gl.glLoadIdentity();
@@ -122,43 +127,17 @@ public class Camera implements GLEventListener {
 		aimCamera(gl, glu);
 		moveCamera();
 
-		// gl.glPushMatrix();
-		// gl.glTranslated(0, 1, 0);
-		// gl.glColor3f(1f, 1f, 1f);
-		// glut.glutSolidSphere(0.5f, 20, 20);
-		// gl.glPopMatrix();
-		//
-		// gl.glPushMatrix();
-		// gl.glTranslated(-8f, 0.2f, 4f);
-		// gl.glTranslated(0, 1, 0);
-		// gl.glColor3f(1f, 1f, 1f);
-		// glut.glutSolidSphere(0.5f, 20, 20);
-		// gl.glPopMatrix();
-		//
-		// gl.glPushMatrix();
-		// gl.glTranslated(-3.5f, 2f, 7.5f);
-		// gl.glColor3f(1f, 1f, 1f);
-		// glut.glutSolidSphere(0.03f, 20, 20);
-		// gl.glPopMatrix();
-		//
-		// gl.glPushMatrix();
-		// gl.glTranslated(-3.5f, 2f, 5.2f);
-		// gl.glColor3f(1f, 1f, 1f);
-		// glut.glutSolidSphere(0.03f, 20, 20);
-		// gl.glPopMatrix();
-		//
-		// gl.glPushMatrix();
-		// gl.glTranslated(-3.5f, 2f, 3.2f);
-		// gl.glColor3f(1f, 1f, 1 f);
-		// glut.glutSolidSphere(0.03f, 20, 20);
-		// gl.glPopMatrix();
-
 		createColiseum(drawable);
 
 		// Iluminação
-		// Light light = new Light();
-		// light.init_lighting(gl);
-
+		light = new Light();
+		
+		if (!luz) {
+			light.init_lighting(gl);
+		} else {
+			light.remove_lighting(gl);
+		}
+		
 		gl.glFlush();
 
 	}
@@ -206,12 +185,6 @@ public class Camera implements GLEventListener {
 		floor4.createRing(drawable, 37, 64, 5, textureWall, 4);
 		Floor5 floor5 = new Floor5(glu, textures);
 		floor5.createRing(drawable, 43, 64, 5, textureWall, 5);
-		
-
-		// createRing(drawable, 47, 64, 30, textureWall, 5);
-		// createRing(drawable, 40, 64, 25, textureWall, 4);
-		// createRing(drawable, 33, 64, 15, textureWall, 3);
-		// createRing(drawable, 25, 64, 10, textureWall, 2);
 
 		// Grades
 		// createRingLines(drawable, 53, 64, 4, 3, 5);
@@ -294,29 +267,31 @@ public class Camera implements GLEventListener {
 		/// Gladiador 1
 		int alturaGladiador1 = 8;
 		int deslocGladiador1 = -8;
+		int cota_de_malha = textures.malha;
 		// Corpo
-		createCube(drawable, 4, 1, 1.8f, 1, deslocGladiador1 - 0.5f, alturaGladiador1 - 0.5f, 0, 0, 0, 0);
+		createCube(drawable, cota_de_malha, 1, 1.8f, 1, deslocGladiador1 - 0.5f, alturaGladiador1 - 0.5f, 0, 0, 0, 0);
 		// Cabeça
 		createCube(drawable, 5, 1f, 1, 1.5f, deslocGladiador1 - 0.5f, alturaGladiador1 + 1, 0, 0, 0, 0);
 		// Braços
 		createCube(drawable, 5, 2, 0.5f, 1, deslocGladiador1 + 0f, alturaGladiador1, 1, 0, 0, 0);
 		createCube(drawable, 5, 2, 0.5f, 1, deslocGladiador1 + 0f, alturaGladiador1, -1, 0, 0, 0);
 		// Pernas
-		createCube(drawable, 5, 1f, 2, 0.4f, deslocGladiador1 - 0.5f, alturaGladiador1 - 2, 0.3f, 0, 0, 0);
-		createCube(drawable, 5, 1f, 2, 0.4f, deslocGladiador1 + -0.5f, alturaGladiador1 - 2, -0.3f, 0, 0, 0);
+		createCube(drawable, cota_de_malha, 1f, 2, 0.4f, deslocGladiador1 - 0.5f, alturaGladiador1 - 2, 0.3f, 0, 0, 0);
+		createCube(drawable, cota_de_malha, 1f, 2, 0.4f, deslocGladiador1 + -0.5f, alturaGladiador1 - 2, -0.3f, 0, 0,
+				0);
 
 		/// Gladiador 2
 		int alturaGladiador2 = 8;
 		int deslocGladiador2 = 8;
 		// Corpo
-		createCube(drawable, 4, 1, 1.8f, 1, deslocGladiador2 + 0.5f, alturaGladiador2 - 0.5f, 0, 0, 0, 0);
+		createCube(drawable, cota_de_malha, 1, 1.8f, 1, deslocGladiador2 + 0.5f, alturaGladiador2 - 0.5f, 0, 0, 0, 0);
 		// Cabeça
 		createCube(drawable, 5, 1f, 1, 1.5f, deslocGladiador2 + 0.5f, alturaGladiador2 + 1, 0, 0, 0, 0);
 		// Braços
 		createCube(drawable, 5, 2, 0.5f, 1, deslocGladiador2 + 0f, alturaGladiador2, 1, 0, 0, 0);
 		createCube(drawable, 5, 2, 0.5f, 1, deslocGladiador2 + 0f, alturaGladiador2, -1, 0, 0, 0);
 		// Pernas
-		createCube(drawable, 5, 1f, 2, 0.4f, deslocGladiador2 + 0.5f, alturaGladiador2 - 2, 0.3f, 0, 0, 0);
+		createCube(drawable, cota_de_malha, 1f, 2, 0.4f, deslocGladiador2 + 0.5f, alturaGladiador2 - 2, 0.3f, 0, 0, 0);
 		createCube(drawable, 5, 1f, 2, 0.4f, deslocGladiador2 + 0.5f, alturaGladiador2 - 2, -0.3f, 0, 0, 0);
 
 	}

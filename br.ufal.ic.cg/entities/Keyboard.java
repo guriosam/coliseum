@@ -20,6 +20,10 @@ public class Keyboard implements KeyListener {
 
 	public void keyPressed(KeyEvent event) {
 
+		if (event.getKeyCode() == KeyEvent.VK_L) {
+			camera.luz = !camera.luz;
+		}
+
 		if (event.getKeyCode() == KeyEvent.VK_C) {
 			camera.doorAngle += 2;
 			camera.distanceDoor += 0.05;

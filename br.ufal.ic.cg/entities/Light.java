@@ -52,6 +52,20 @@ public class Light {
 		gl.glEnable(GL2.GL_DEPTH_TEST);
 
 	}
+	
+	public void remove_lighting(GL2 gl) {
+		//gl.glDisable(GL2.GL_COLOR_MATERIAL);
+		gl.glDisable(GL2.GL_LIGHTING);
+		gl.glDisable(GL2.GL_LIGHT1);
+		// gl.glEnable(GL2.GL_LIGHT2);
+		gl.glDisable(GL2.GL_LIGHT3);
+
+		// Reflexo vidro
+		gl.glDisable(GL2.GL_BLEND);
+		gl.glDisable(GL2.GL_NORMALIZE);
+		//gl.glDisable(GL2.GL_DEPTH_TEST);
+	}
+	
 
 
 
