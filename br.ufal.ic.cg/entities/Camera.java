@@ -19,7 +19,7 @@ public class Camera implements GLEventListener {
 	Light light;
 
 	float doorAngle = 60;
-	float distanceDoor = -53;
+	float distanceDoor = -53.5f;
 
 	// Define camera variables
 	float cameraAzimuth = 270.0f, cameraSpeed = 0.0f, cameraElevation = -25.0f;
@@ -180,11 +180,11 @@ public class Camera implements GLEventListener {
 		Floor2 floor2 = new Floor2(glu, textures);
 		floor2.createRing(drawable, 25, 64, 5, textureWall, 2);
 		Floor3 floor3 = new Floor3(glu, textures);
-		floor3.createRing(drawable, 31, 64, 5, textureWall, 3);
+		floor3.createRing(drawable, 35, 64, 5, textureWall, 3);
 		Floor3 floor4 = new Floor3(glu, textures);
-		floor4.createRing(drawable, 37, 64, 5, textureWall, 4);
+		floor4.createRing(drawable, 45, 64, 5, textureWall, 4);
 		Floor5 floor5 = new Floor5(glu, textures);
-		floor5.createRing(drawable, 43, 64, 5, textureWall, 5);
+		floor5.createRing(drawable, 55, 64, 5, textureWall, 5);
 
 		// Grades
 		// createRingLines(drawable, 53, 64, 4, 3, 5);
@@ -193,7 +193,7 @@ public class Camera implements GLEventListener {
 		createCube(drawable, textures.pedra, 8, 0.2f, 3, -57f, 3, 24, -45, 45, 25);
 
 		// Door
-		createCube(drawable, textures.door, 0.2f, 5, 3.5f, distanceDoor, 3, 31.5f, 0, doorAngle, 0);
+		createCube(drawable, textures.door, 0.2f, 5, 5f, distanceDoor, 3, 30f, 0, doorAngle, 0);
 
 		createGladiadores(drawable);
 		createLeao(drawable);
@@ -307,11 +307,6 @@ public class Camera implements GLEventListener {
 		gl.glRotated(rotateX, 1, 0, 0);
 		gl.glRotated(rotateY, 0, 1, 0);
 		gl.glRotated(rotateZ, 0, 0, 1);
-		//
-		// gl.glScalef(lenght, height, width);
-		// glut.glutSolidCube(1f);
-		// gl.glScalef(0, 0, 0);
-
 		gl.glTranslatef(z, -y, x);
 
 		// ---------Textura------
@@ -320,15 +315,6 @@ public class Camera implements GLEventListener {
 		gl.glBindTexture(GL2.GL_TEXTURE_2D, texture);
 		gl.glColor3f(1f, 1f, 1f);
 
-		// gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MIN_FILTER,
-		// GL2.GL_LINEAR_MIPMAP_NEAREST);
-		// gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_MAG_FILTER,
-		// GL2.GL_LINEAR_MIPMAP_LINEAR);
-		// gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_WRAP_S,
-		// GL2.GL_REPEAT);
-		// gl.glTexParameteri(GL2.GL_TEXTURE_2D, GL2.GL_TEXTURE_WRAP_T,
-		// GL2.GL_REPEAT);
-		//
 		gl.glBegin(GL2.GL_QUADS);
 
 		x = -x;

@@ -38,19 +38,25 @@ public class Floor3 extends Floor {
 		GLUquadric disk = glu.gluNewQuadric();
 		int x = 0;
 		int y = 0;
-
+		
+		float k = 3;
 		for (float j = 5 * (floor - 1); j < height * floor; j += 0.02) {
 			gl.glPushMatrix();
-			gl.glColor3f(0.6f, 0.6f, 0.6f);
 			gl.glTranslatef(1, j, 1);
 			glu.gluQuadricTexture(disk, true);
+			gl.glColor3f(1f, 1f, 1f);
 			gl.glRotatef(90, -1, 0, 0);
 			x = 5;
 			y = 10;
 
 			for (int i = 0; i < quantidade; i++) {
-				glu.gluPartialDisk(disk, start, start + 1, 5, 1, x, y);
+				
+				glu.gluPartialDisk(disk, start - 6 + k, start + 1, 5, 1, x, y);
 				x += 20;
+				
+				if (k < 6) {
+					k += 0.0005;
+				}
 			}
 
 			gl.glPopMatrix();

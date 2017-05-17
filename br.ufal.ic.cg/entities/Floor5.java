@@ -38,7 +38,7 @@ public class Floor5 extends Floor {
 
 		int x = 0;
 		int y = 0;
-
+		float k = 0;
 		for (float j = (floor - 1) * 5; j < height * floor - 1; j += 0.02) {
 			gl.glPushMatrix();
 			gl.glTranslatef(1, j, 1);
@@ -47,14 +47,18 @@ public class Floor5 extends Floor {
 			gl.glRotatef(90, -1, 0, 0);
 			x = 5;
 			y = 5;
+
 			for (int i = 0; i < quantidade; i++) {
 				if (i < limite) {
 					// Parte maior
 					glu.gluPartialDisk(disk, end - 1, end, 5, 1, x, y);
-					glu.gluPartialDisk(disk, end - 7, end - 6, 5, 1, x, y);
+					// glu.gluPartialDisk(disk, end - 7, end - 6, 5, 1, x, y);
+					glu.gluPartialDisk(disk, end - 13 + k, end - 6, 5, 1, x, y);
 				}
-
 				x += 10;
+				if (k < 6) {
+					k += 0.0008;
+				}
 			}
 			gl.glPopMatrix();
 		}

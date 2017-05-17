@@ -26,7 +26,7 @@ public class Keyboard implements KeyListener {
 
 		if (event.getKeyCode() == KeyEvent.VK_C) {
 			camera.doorAngle += 2;
-			camera.distanceDoor += 0.05;
+			camera.distanceDoor += 0.1;
 
 			if (camera.doorAngle >= 60) {
 				camera.doorAngle = 60;
@@ -40,14 +40,14 @@ public class Keyboard implements KeyListener {
 
 		if (event.getKeyCode() == KeyEvent.VK_X) {
 			camera.doorAngle -= 2;
-			camera.distanceDoor -= 0.03;
+			camera.distanceDoor -= 0.2;
 
 			if (camera.doorAngle <= -30) {
 				camera.doorAngle = -30;
 			}
 
-			if (camera.distanceDoor < -54) {
-				camera.distanceDoor = -54;
+			if (camera.distanceDoor < -55.5f) {
+				camera.distanceDoor = -55.5f;
 			}
 
 		}
