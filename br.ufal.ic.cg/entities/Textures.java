@@ -38,6 +38,7 @@ public class Textures {
 	int pedra;
 	int pedraEscura;
 	int malha;
+	int fabricRed;
 
 	public void carregar_texturas(GLAutoDrawable drawable) {
 		GL2 gl = drawable.getGL().getGL2();
@@ -118,6 +119,9 @@ public class Textures {
 			
 			Texture text20 = TextureIO.newTexture(new File(getClass().getResource("/img/malha_metal.jpg").getPath()), true);
 			malha = text20.getTextureObject(gl);
+			
+			Texture text21 = TextureIO.newTexture(new File(getClass().getResource("/img/fabric_red.jpg").getPath()), true);
+			fabricRed = text21.getTextureObject(gl);
 
 		} catch (Exception e) {
 			e.printStackTrace();

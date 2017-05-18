@@ -197,7 +197,15 @@ public class Camera implements GLEventListener {
 
 		createGladiadores(drawable);
 		createLeao(drawable);
-
+		
+		int deslocarCadeira = 16;
+		int rotationX = 0;
+		int rotationY = 0;
+		int rotationZ = 0;
+		createCube(drawable, textures.fabricRed, 1f, 10f, 7f, deslocarCadeira + 5, 10f, 0.5f, rotationX, rotationY, rotationZ);
+		createCube(drawable, textures.fabricRed, 5f, 3f, 5f, deslocarCadeira + 3, 5f, 0.5f, rotationX, rotationY, rotationZ);
+		createCube(drawable, textures.textureTable, 5f, 5f, 1.5f, deslocarCadeira + 3, 5f, 4f, rotationX, rotationY, rotationZ);
+		createCube(drawable, textures.textureTable, 5f, 5f, 1.5f, deslocarCadeira + 3, 5f, -2.5f, rotationX, rotationY, rotationZ);
 		/// Lança
 		int alturaLanca = 7;
 		int deslocLanca = 3;
